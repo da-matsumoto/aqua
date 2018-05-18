@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>手書き水族館</title>
+<link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="wrapper">
+
+    <div class="header">
+        <img src="img/title.png" width="150">
+    </div>
+    <div class="displayarea">
+        <div class="module"><img id="newImg"  class="fish" width="300"></div>
+    </div>
+    <div class="left">
+        <canvas id="drowarea" width="280" height="212" style="border:1px solid #419BF9;"></canvas>
+    </div>
+    <div class="right">
+        <div id="save_btn"><img src="img/save.png" width="250"></div>
+        <div id="move_btn"><img src="img/move.png" width="250"></div>
+        <div id="clear_btn"><img src="img/delete.png" width="250"></div>
+    </div>
+    <img src="img/change.png" width="100" class="left mb10 mt10">
+    <div id="red" class="clear">
+    </div>
+    <div id="pink">
+    </div>
+    <div id="lightpink">
+    </div>
+    <div id="purple">
+    </div>
+    <div id="darkblue">
+    </div>
+    <div id="blue">
+    </div>
+    <div id="lightblue">
+    </div>
+    <div id="darkgreen">
+    </div>
+    <div id="green">
+    </div>
+    <div id="lightgreen">
+    </div>
+    <div id="yellow">
+    </div>
+    <div id="orange">
+    </div>
+    <div id="black">
+    </div>
+    <div class="clear"></div>
+    <img src="img/thick.png" width="115" class="left mb10 mt20">
+    <select name="thickness" id="thickness">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="13">13</option>
+    <option value="14">14</option>
+    <option value="15">15</option>
+    <option value="16">16</option>
+    </select>
+</div>
+<script src="js/jquery-2.1.3.min.js"></script>
+<script>
+var can = $("#drowarea")[0];
+var ctx = can.getContext("2d");
+
+$(can).on("mousedown",function(e){
+    canvas_mouse_event = true;
+    oldX = e.offsetX;
+    oldY = e.offsetY;
+ });
+$(can).on("mouseup",function(e){
+    canvas_mouse_event = false;
+});
+
+$(can).on("mousemove",function(e){
+    if(canvas_mouse_event == true){
+    var newX = e.offsetX;
+    var newY = e.offsetY;
+    var thick = $("#thickness").val();
+    ctx.lineWidth = thick;
+    $(red).on("click",function(){
+        var color = "#ff7f7f";
+        ctx.strokeStyle = color;
+    });
+    $(pink).on("click",function(){
+        var color = "#ff7fbf";
+        ctx.strokeStyle = color;
+    });
+    $(lightpink).on("click",function(){
+        var color = "#ff7fff";
+        ctx.strokeStyle = color;
+    });
+    $(purple).on("click",function(){
+        var color = "#bf7fff";
+        ctx.strokeStyle = color;
+    });
+    $(darkblue).on("click",function(){
+        var color = "#7f7fff";
+        ctx.strokeStyle = color;
+    });
+    $(blue).on("click",function(){
+        var color = "#7fbfff";
+        ctx.strokeStyle = color;
+    });
+    $(lightblue).on("click",function(){
+        var color = "#7fffff";
+        ctx.strokeStyle = color;
+    });
+    $(darkgreen).on("click",function(){
+        var color = "#7fffbf";
+        ctx.strokeStyle = color;
+    });
+    $(green).on("click",function(){
+        var color = "#7fff7f";
+        ctx.strokeStyle = color;
+    });
+    $(lightgreen).on("click",function(){
+        var color = "#bfff7f";
+        ctx.strokeStyle = color;
+    });
+    $(yellow).on("click",function(){
+        var color = "#ffff7f";
+        ctx.strokeStyle = color;
+    });
+    $(orange).on("click",function(){
+        var color = "#ffbf7f";
+        ctx.strokeStyle = color;
+    });
+    $(black).on("click",function(){
+        var color = "#504946";
+        ctx.strokeStyle = color;
+    });
+    ctx.beginPath();
+    ctx.moveTo(oldX,oldY);
+    ctx.lineTo(newX,newY);
+    ctx.stroke();
+    ctx.closePath();
+    oldX = newX;
+    oldY = newY;
+    }
+});
+
+$("#save_btn").on("click",function(){
+    var canvas = document.getElementById("drowarea");
+    var image = canvas.toDataURL();
+    localStorage.setItem("saveKey",image);
+});
+$("#clear_btn").on("click",function(){
+    ctx.clearRect(0,0,800,300);
+    var image = "images/noimage.png";
+    document.getElementById("newImg").src = image;
+});
+    
+$("#move_btn").on("click",function(){
+    var image = localStorage.getItem("saveKey");
+    document.getElementById("newImg").src = image;
+});
+
+var rotate = function(){
+	//var a = 0; //left: 0;top: 0;なので右起点での中心地
+	var b = 0; //left: 0;top: 0;なので上起点での中心地
+	var r = 0; //半径
+	c = 0;
+}
+var move = function(){
+	d = 0;
+}
+var curve = function(){
+	 e= 0;
+	setInterval(function(){
+		$('.fish').css({
+			left: 150*Math.sin(0.001*e*Math.PI) + 'px',
+			top: 40*(Math.sin(0.01*e*Math.PI)) + 'px'
+		});
+		e++;
+	},1);
+}
+$(function(){
+	rotate();
+	move();
+	curve();
+});
+
+</script>
+</body>
+</html>
+
+
+
